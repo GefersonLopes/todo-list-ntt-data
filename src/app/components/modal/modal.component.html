@@ -1,0 +1,65 @@
+<div
+  class="fixed z-10 inset-0 overflow-y-auto bg-gray-900 bg-opacity-75"
+  *ngIf="isOpen"
+>
+  <div class="flex items-center justify-center min-h-screen">
+    <div class="fixed inset-0 transition-opacity" (click)="closeModal()"></div>
+
+    <div
+      class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all max-w-lg w-full"
+    >
+      <div class="p-4">
+        <header class="flex justify-between font-semibold">
+          <h3 class="text-lg text-center font-semibold">{{ type }}</h3>
+          <button
+            class="text-sm text-center text-gray-500"
+            (click)="closeModal()"
+          >
+            x
+          </button>
+        </header>
+        <div
+          *ngIf="type !== 'delete'"
+          class="mt-4"
+        >
+          <label for="title" class="block text-sm font-medium text-gray-700"
+            >Título:</label
+          >
+          <input
+            type="text"
+            id="title"
+            name="title"
+            [(ngModel)]="title"
+            class="mt-1 p-2 border border-gray-300 rounded-md w-full"
+          />
+
+          <label for="date" class="block text-sm font-medium text-gray-700 mt-4"
+            >Data:</label
+          >
+          <input
+            type="date"
+            id="date"
+            name="date"
+            [(ngModel)]="date"
+            class="mt-1 p-2 border border-gray-300 rounded-md w-full"
+          />
+        </div>
+        <div *ngIf="type === 'delete'">Tem certeza que deseja deletar este item?</div>
+        <div class="mt-4">
+          <button
+            class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mr-2"
+            (click)="addEvent()"
+          >
+            {{ type === 'delete' ? 'Deletar' : 'Avançar' }}
+          </button>
+          <button
+            class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+            (click)="closeModal()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

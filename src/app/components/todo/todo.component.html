@@ -1,0 +1,88 @@
+<ul class="flex flex-col items-center justify-center w-full">
+  <li *ngFor="let todo of todoList" class="my-4 w-[80%]">
+    <header class="flex justify-between items-center w-full mb-2">
+      <div class="flex items-center">
+        <mat-icon
+          [style.color]="todo.color"
+          style="
+            font-size: 32px;
+            font-weight: bold;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+          "
+          >{{ todo.icon }}</mat-icon
+        >
+        <h3 class="text-[2rem]" [style.color]="todo.color">
+          {{ todo.title }}
+        </h3>
+      </div>
+      <mat-icon
+        (click)="handleOpenModal({ type: 'add', category: todo.title, taskId: 0})"
+        style="color: #666666"
+        >add_circle</mat-icon
+      >
+    </header>
+    <section class="flex flex-col gap-4 items-center w-full">
+      <div
+        *ngFor="let task of todo.tasks"
+        class="flex items-center bg-[#222222] h-[5rem] w-full p-5 text-white rounded-[15px] justify-between gap-4"
+      >
+        <div class="flex items-center">
+          <mat-icon
+            (click)="handleCheckTask(task)"
+            [style.color]="todo.color"
+            style="
+              font-size: 32px;
+              width: 40px;
+              height: 40px;
+              display: flex;
+              align-items: center;
+            "
+          >
+            {{
+              task.status === "done" ? "check_circle" : "radio_button_unchecked"
+            }}
+          </mat-icon>
+          <main>
+            <p class="text-lg" [class.line-through]="task.status === 'done'">
+              {{ task.title }}
+            </p>
+            <p
+              class="text-lg"
+              [class.line-through]="task.status === 'done'"
+              [class.text-red-500]="isDateOverdue(task.date)"
+            >
+              {{ task.date }}
+            </p>
+          </main>
+        </div>
+        <div class="flex flex-end gap-1">
+          <mat-icon
+            style="color: #666666"
+            (click)="
+              handleOpenModal({
+                type: 'edit',
+                category: todo.title,
+                taskId: task.id
+              })
+            "
+            >edit</mat-icon
+          >
+          <mat-icon
+            style="color: #666666"
+            (click)="
+              handleOpenModal({
+                type: 'delete',
+                category: todo.title,
+                taskId: task.id
+              })
+            "
+            >delete</mat-icon
+          >
+        </div>
+      </div>
+    </section>
+  </li>
+</ul>
